@@ -1,0 +1,213 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Resume Parser - Serverless resume parsing pipeline
+
+Parameters:
+  ApiKey:
+    Type: String
+    NoEcho: true
+  AnthropicApiKey:
+    Type: String
+    NoEcho: true
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 30
+    MemorySize: 256
+    Architectures:
+      - x86_64
+
+Resources:
+  ResumeUploadsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-uploads"
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods:
+              - PUT
+              - POST
+              - GET
+            AllowedOrigins:
+              - "*"
+            AllowedHeaders:
+              - Content-Type
+              - x-api-key
+
+  ProcessingQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${AWS::StackName}-processing"
+      VisibilityTimeout: 300
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt ProcessingDLQ.Arn
+        maxReceiveCount: 3
+
+  ProcessingDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${AWS::StackName}-dlq"
+
+  ResumesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-resumes"
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: resumeId
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+        - AttributeName: uploadedAt
+          AttributeType: S
+      KeySchema:
+        - AttributeName: resumeId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: status-index
+          KeySchema:
+            - AttributeName: status
+              KeyType: HASH
+            - AttributeName: uploadedAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+
+  UploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/upload.handler
+      CodeUri: .
+      FunctionUrlConfig:
+        AuthType: NONE
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: !Ref ResumeUploadsBucket
+          DYNAMODB_TABLE_NAME: !Ref ResumesTable
+          API_KEY: !Ref ApiKey
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ResumeUploadsBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumesTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/upload.ts
+        External:
+          - "@aws-sdk/*"
+
+  TriggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/trigger.handler
+      CodeUri: .
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket: !Ref ResumeUploadsBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: "uploads/"
+                  - Name: suffix
+                    Value: ".pdf"
+      Environment:
+        Variables:
+          SQS_QUEUE_URL: !Ref ProcessingQueue
+          DYNAMODB_TABLE_NAME: !Ref ResumesTable
+      Policies:
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt ProcessingQueue.QueueName
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumesTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/trigger.ts
+        External:
+          - "@aws-sdk/*"
+
+  ProcessorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/processor.handler
+      CodeUri: .
+      Timeout: 60
+      MemorySize: 512
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt ProcessingQueue.Arn
+            BatchSize: 1
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: !Ref ResumeUploadsBucket
+          DYNAMODB_TABLE_NAME: !Ref ResumesTable
+          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref ResumeUploadsBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumesTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/processor.ts
+        External:
+          - "@aws-sdk/*"
+
+  QueryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/query.handler
+      CodeUri: .
+      FunctionUrlConfig:
+        AuthType: NONE
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: !Ref ResumesTable
+          API_KEY: !Ref ApiKey
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ResumesTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/query.ts
+        External:
+          - "@aws-sdk/*"
+
+Outputs:
+  UploadFunctionUrl:
+    Value: !GetAtt UploadFunctionUrl.FunctionUrl
+  QueryFunctionUrl:
+    Value: !GetAtt QueryFunctionUrl.FunctionUrl
+  UploadsBucketName:
+    Value: !Ref ResumeUploadsBucket
+  ResumesTableName:
+    Value: !Ref ResumesTable
