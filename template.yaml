@@ -22,7 +22,7 @@ Resources:
   ResumeUploadsBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "${AWS::StackName}-uploads"
+      BucketName: !Sub "${AWS::StackName}-uploads-${AWS::AccountId}"
       CorsConfiguration:
         CorsRules:
           - AllowedMethods:
@@ -90,7 +90,7 @@ Resources:
           DYNAMODB_TABLE_NAME: !Ref ResumesTable
           API_KEY: !Ref ApiKey
       Policies:
-        - S3CrudPolicy:
+        - S3WritePolicy:
             BucketName: !Ref ResumeUploadsBucket
         - DynamoDBCrudPolicy:
             TableName: !Ref ResumesTable

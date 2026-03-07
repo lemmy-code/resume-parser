@@ -1,0 +1,10 @@
+node_modules/
+frontend/
+docs/
+.git/
+.github/
+.aws-sam/
+*.md
+docker-compose.yml
+scripts/
+infra/

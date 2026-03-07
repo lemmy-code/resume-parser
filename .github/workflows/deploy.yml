@@ -29,16 +29,17 @@ jobs:
           aws-region: eu-west-1
 
       - name: Build SAM application
-        run: sam build --template-file infra/template.yaml
+        run: sam build
 
       - name: Deploy SAM application
         run: |
           sam deploy \
-            --template-file infra/template.yaml \
+            --template-file .aws-sam/build/template.yaml \
             --stack-name resume-parser \
             --capabilities CAPABILITY_IAM \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
+            --resolve-s3 \
             --parameter-overrides \
               ApiKey=${{ secrets.API_KEY }} \
               AnthropicApiKey=${{ secrets.ANTHROPIC_API_KEY }} \
@@ -69,7 +70,8 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         env:
-          VITE_API_URL: ${{ secrets.API_URL }}
+          VITE_UPLOAD_API_URL: ${{ secrets.UPLOAD_API_URL }}
+          VITE_QUERY_API_URL: ${{ secrets.QUERY_API_URL }}
           VITE_API_KEY: ${{ secrets.API_KEY }}
         run: npm run build
 

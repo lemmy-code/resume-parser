@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const UPLOAD_API_URL = import.meta.env.VITE_UPLOAD_API_URL || 'http://localhost:3000';
+const QUERY_API_URL = import.meta.env.VITE_QUERY_API_URL || 'http://localhost:3000';
 const API_KEY = import.meta.env.VITE_API_KEY || 'dev-api-key';
 
 interface UploadResponse {
@@ -43,7 +44,7 @@ interface ResumeResponse {
 }
 
 export async function requestUpload(filename: string): Promise<UploadResponse> {
-  const res = await fetch(`${API_URL}/resumes/upload`, {
+  const res = await fetch(`${UPLOAD_API_URL}/resumes/upload`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ export async function uploadFile(url: string, file: File): Promise<void> {
 }
 
 export async function getStatus(resumeId: string): Promise<StatusResponse> {
-  const res = await fetch(`${API_URL}/resumes/${resumeId}/status`, {
+  const res = await fetch(`${QUERY_API_URL}/resumes/${resumeId}/status`, {
     headers: { 'x-api-key': API_KEY },
   });
   if (!res.ok) throw new Error(`Status check failed: ${res.status}`);
@@ -73,7 +74,7 @@ export async function getStatus(resumeId: string): Promise<StatusResponse> {
 }
 
 export async function getResume(resumeId: string): Promise<ResumeResponse> {
-  const res = await fetch(`${API_URL}/resumes/${resumeId}`, {
+  const res = await fetch(`${QUERY_API_URL}/resumes/${resumeId}`, {
     headers: { 'x-api-key': API_KEY },
   });
   if (!res.ok) throw new Error(`Get resume failed: ${res.status}`);
@@ -83,7 +84,7 @@ export async function getResume(resumeId: string): Promise<ResumeResponse> {
 export async function searchResumes(skill?: string): Promise<ResumeResponse[]> {
   const params = new URLSearchParams();
   if (skill) params.set('skill', skill);
-  const res = await fetch(`${API_URL}/resumes?${params.toString()}`, {
+  const res = await fetch(`${QUERY_API_URL}/resumes?${params.toString()}`, {
     headers: { 'x-api-key': API_KEY },
   });
   if (!res.ok) throw new Error(`Search failed: ${res.status}`);

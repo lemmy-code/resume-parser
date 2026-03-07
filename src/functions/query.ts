@@ -16,44 +16,49 @@ function jsonResponse(statusCode: number, body: unknown): APIGatewayProxyResultV
 }
 
 export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
-  if (event.requestContext.http.method === 'OPTIONS') {
-    return jsonResponse(200, {});
-  }
-
-  const apiKey = event.headers['x-api-key'];
-  if (!apiKey || apiKey !== process.env.API_KEY) {
-    return jsonResponse(401, { error: 'Unauthorized' });
-  }
-
-  const rawPath = event.rawPath;
-  const segments = rawPath.split('/').filter(Boolean);
-
-  // /resumes
-  if (segments.length === 1 && segments[0] === 'resumes') {
-    const skill = event.queryStringParameters?.skill;
-    const results = await searchResumes(skill);
-    return jsonResponse(200, results);
-  }
-
-  // /resumes/{id}/status
-  if (segments.length === 3 && segments[0] === 'resumes' && segments[2] === 'status') {
-    const id = segments[1];
-    const resume = await getResume(id);
-    if (!resume) {
-      return jsonResponse(404, { error: 'Resume not found' });
+  try {
+    if (event.requestContext.http.method === 'OPTIONS') {
+      return jsonResponse(200, {});
     }
-    return jsonResponse(200, { resumeId: resume.resumeId, status: resume.status });
-  }
 
-  // /resumes/{id}
-  if (segments.length === 2 && segments[0] === 'resumes') {
-    const id = segments[1];
-    const resume = await getResume(id);
-    if (!resume) {
-      return jsonResponse(404, { error: 'Resume not found' });
+    const apiKey = event.headers['x-api-key'];
+    if (!apiKey || apiKey !== process.env.API_KEY) {
+      return jsonResponse(401, { error: 'Unauthorized' });
     }
-    return jsonResponse(200, resume);
-  }
 
-  return jsonResponse(404, { error: 'Not found' });
+    const rawPath = event.rawPath;
+    const segments = rawPath.split('/').filter(Boolean);
+
+    // /resumes
+    if (segments.length === 1 && segments[0] === 'resumes') {
+      const skill = event.queryStringParameters?.skill;
+      const results = await searchResumes(skill);
+      return jsonResponse(200, results);
+    }
+
+    // /resumes/{id}/status
+    if (segments.length === 3 && segments[0] === 'resumes' && segments[2] === 'status') {
+      const id = segments[1];
+      const resume = await getResume(id);
+      if (!resume) {
+        return jsonResponse(404, { error: 'Resume not found' });
+      }
+      return jsonResponse(200, { resumeId: resume.resumeId, status: resume.status });
+    }
+
+    // /resumes/{id}
+    if (segments.length === 2 && segments[0] === 'resumes') {
+      const id = segments[1];
+      const resume = await getResume(id);
+      if (!resume) {
+        return jsonResponse(404, { error: 'Resume not found' });
+      }
+      return jsonResponse(200, resume);
+    }
+
+    return jsonResponse(404, { error: 'Not found' });
+  } catch (error) {
+    console.error('Query handler error:', error);
+    return jsonResponse(500, { error: 'Internal server error' });
+  }
 };
