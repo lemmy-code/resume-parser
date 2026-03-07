@@ -9,27 +9,42 @@ Upload a PDF resume and get back structured JSON with extracted skills, experien
 - S3 for file storage, SQS for async processing, DynamoDB for persistence
 - Anthropic Claude API for resume extraction
 - pdf-parse for PDF text extraction
-- Zod for validation
-- React + Vite + Tailwind CSS (frontend)
+- Zod for response validation
+- React + Vite + shadcn/ui + Tailwind CSS (frontend)
 - LocalStack + Docker for local development
+- GitHub Actions for CI/CD
 
 ## Setup
 
 ### Prerequisites
 
 - Node.js 20+
-- AWS CLI
+- AWS CLI configured with credentials
 - AWS SAM CLI (`brew install aws-sam-cli`)
 - Docker
 
 ### Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/resume-parser.git
+git clone https://github.com/lemmy-code/resume-parser.git
 cd resume-parser
 npm install
 cd frontend && npm install
 ```
+
+### Environment Variables
+
+Backend variables are managed through the SAM template as parameters (`ApiKey`, `AnthropicApiKey`). For local development, create a `.env` file or pass them directly.
+
+Frontend uses a `.env` file in the `frontend/` directory:
+
+```
+VITE_UPLOAD_API_URL=https://your-upload-lambda-url
+VITE_QUERY_API_URL=https://your-query-lambda-url
+VITE_API_KEY=your-api-key
+```
+
+See `frontend/.env.example` for reference.
 
 ### Local Development
 
@@ -39,52 +54,45 @@ Start LocalStack to emulate AWS services locally:
 docker compose up -d
 ```
 
-Then start the API:
+Then start the Lambda functions:
 
 ```bash
 sam local start-api
 ```
 
-The API runs at `http://localhost:3000`.
-
-### Environment Variables
-
-```
-AWS_REGION=eu-west-1
-AWS_ENDPOINT_URL=http://localhost:4566
-AWS_ACCESS_KEY_ID=test
-AWS_SECRET_ACCESS_KEY=test
-
-S3_BUCKET_NAME=resume-parser-uploads
-SQS_QUEUE_URL=https://sqs.eu-west-1.amazonaws.com/123/resume-processing
-DYNAMODB_TABLE_NAME=resumes
-ANTHROPIC_API_KEY=sk-ant-your-key
-```
-
-For local dev with LocalStack, the AWS credentials can be any dummy values.
-
 ## Deploy
 
-Build and deploy to AWS with SAM:
+Build and deploy to AWS:
 
 ```bash
 sam build
 sam deploy --guided
 ```
 
-On the first deploy, `--guided` walks you through setting the stack name, region, and parameter values (including `AnthropicApiKey`). After that, `sam deploy` picks up the saved config from `samconfig.toml`.
+First deploy walks you through stack name, region, and parameter values. After that, `sam deploy` uses the saved config.
+
+Frontend deploy:
+
+```bash
+cd frontend
+npm run build
+aws s3 sync dist/ s3://your-frontend-bucket --delete
+```
 
 ## API
+
+All endpoints require an `x-api-key` header.
 
 ### Upload a resume
 
 ```bash
-curl -X POST http://localhost:3000/resumes/upload \
+curl -X POST https://your-upload-url/resumes/upload \
   -H "Content-Type: application/json" \
+  -H "x-api-key: your-key" \
   -d '{"filename": "resume.pdf"}'
 ```
 
-Returns a `resumeId` and a presigned `uploadUrl`. Upload the PDF directly to S3 using the presigned URL:
+Returns a `resumeId` and a presigned `uploadUrl`. Upload the PDF directly to S3:
 
 ```bash
 curl -X PUT "<uploadUrl>" \
@@ -95,24 +103,29 @@ curl -X PUT "<uploadUrl>" \
 ### Check processing status
 
 ```bash
-curl http://localhost:3000/resumes/<resumeId>/status
+curl https://your-query-url/resumes/<resumeId>/status \
+  -H "x-api-key: your-key"
 ```
 
-### Get parsed resume or search
+### Get parsed resume
 
 ```bash
-curl http://localhost:3000/resumes/<resumeId>
+curl https://your-query-url/resumes/<resumeId> \
+  -H "x-api-key: your-key"
+```
 
-curl "http://localhost:3000/resumes?skill=TypeScript&role=backend"
+### Search by skill
+
+```bash
+curl "https://your-query-url/resumes?skill=TypeScript" \
+  -H "x-api-key: your-key"
 ```
 
 ## Frontend
-
-The frontend is a React app in the `frontend/` directory.
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Runs on `http://localhost:5173`. Has pages for uploading resumes, viewing parsed results, and searching by skill or role.
+Runs on `http://localhost:5173`. Upload resumes, track processing status, view parsed results, and search by skill.
