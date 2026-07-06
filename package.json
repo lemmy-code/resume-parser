@@ -5,10 +5,13 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist dist-test",
+    "db:migrate": "./scripts/db-migrate.sh",
     "test": "tsc -p tsconfig.test.json && node --test 'dist-test/**/*.test.js'",
     "smoke:embed": "tsc -p tsconfig.test.json && RUN_DB_SMOKE=1 node --test 'dist-test/**/*.integration.test.js'",
     "smoke:search": "tsc -p tsconfig.test.json && RUN_DB_SMOKE=1 node --test 'dist-test/rag/search.integration.test.js'",
-    "backfill": "tsc -p tsconfig.test.json && node dist-test/scripts/backfill.js"
+    "backfill": "tsc -p tsconfig.test.json && node dist-test/scripts/backfill.js",
+    "seed:eval": "tsc -p tsconfig.test.json && node dist-test/scripts/seed-eval.js",
+    "eval": "tsc -p tsconfig.test.json && node dist-test/scripts/eval.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

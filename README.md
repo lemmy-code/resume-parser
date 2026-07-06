@@ -2,6 +2,10 @@
 
 Upload a PDF resume and get back structured JSON with extracted skills, experience, education, and contact info using Claude AI.
 
+> **Semantic search + RAG:** a pgvector-backed semantic search and grounded
+> question-answering layer (`POST /search`, `POST /ask`) sits on top of this
+> pipeline, with a recall@5 eval harness. See [`docs/RAG.md`](docs/RAG.md).
+
 ## Tech Stack
 
 - TypeScript, Node.js 20
