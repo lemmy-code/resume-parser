@@ -6,7 +6,7 @@ import {
   describeDuration,
   CHUNK_TYPES,
   type ChunkType,
-} from './chunk.ts';
+} from './chunk';
 import type { ParsedResumeData } from '../types';
 
 const ASOF = new Date('2025-01-01T00:00:00Z');
