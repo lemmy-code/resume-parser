@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { embedResume } from './embedResume';
 import { FakeEmbedder } from './embeddings';
-import type { ChunkStore, EmbeddedChunk } from './store';
+import type { ChunkStore, ChunkHit, EmbeddedChunk } from './store';
 import type { ParsedResumeData } from '../types';
 
 // In-memory store that records what the orchestrator did.
@@ -17,6 +17,9 @@ class MemoryStore implements ChunkStore {
   }
   async countByResume() {
     return 0;
+  }
+  async search(): Promise<ChunkHit[]> {
+    return [];
   }
   async close() {}
 }
