@@ -13,10 +13,14 @@ services:
 
   # Vector store for the RAG semantic-search layer (Step 0 gate).
   # Mirrors the AWS deploy target (Postgres + pgvector) — keeps the stack single-cloud.
+  # LOCAL DEV ONLY: these credentials are throwaway and the port is bound to
+  # loopback so the DB is never reachable off this machine. The deployed
+  # RDS/Aurora instance takes its credentials from AWS Secrets Manager — no
+  # static credentials ship anywhere.
   postgres:
     image: pgvector/pgvector:pg16
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     environment:
       - POSTGRES_USER=resume
       - POSTGRES_PASSWORD=resume
