@@ -6,3 +6,4 @@ samconfig.toml
 frontend/node_modules/
 frontend/dist/
 dist-test/
+.DS_Store
