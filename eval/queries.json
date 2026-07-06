@@ -1,0 +1,72 @@
+[
+  {
+    "id": "q01",
+    "type": "exact-skill",
+    "query": "candidates who know Kubernetes",
+    "expected": ["r006"],
+    "note": "Kubernetes appears in exactly one resume."
+  },
+  {
+    "id": "q02",
+    "type": "paraphrase",
+    "query": "engineers with infrastructure-as-code experience",
+    "expected": ["r003", "r006"],
+    "note": "No resume literally says 'infrastructure as code' in its skills list; they say Bicep (r003) and Terraform (r006). Tests semantic match over synonyms."
+  },
+  {
+    "id": "q03",
+    "type": "multi-constraint",
+    "query": "event-driven Azure experience who also know React",
+    "expected": ["r003"],
+    "note": "Flagship demo query. r012 has Azure + event-driven but no React; r003 is the only one with all three."
+  },
+  {
+    "id": "q04",
+    "type": "multi-constraint",
+    "query": "React front-end with an event-driven AWS backend",
+    "expected": ["r007"],
+    "note": "r001 is AWS event-driven but no React; r003 is Azure not AWS. r007 is the only intersection."
+  },
+  {
+    "id": "q05",
+    "type": "exact-tech",
+    "query": "Java backend developer with Spring Boot",
+    "expected": ["r010"],
+    "note": "Spring Boot appears in exactly one resume."
+  },
+  {
+    "id": "q06",
+    "type": "seniority-domain",
+    "query": "staff or principal level distributed systems engineers",
+    "expected": ["r012"],
+    "note": "Seniority + domain. r010 is a 'Staff Backend Engineer' but framed around Java/Kafka, not distributed-systems design; r012 is the intended top hit."
+  },
+  {
+    "id": "q07",
+    "type": "paraphrase",
+    "query": "someone who has worked with vector databases and semantic search",
+    "expected": ["r009"],
+    "note": "Synonym bridge: resume says pgvector / RAG / embeddings. Only one match."
+  },
+  {
+    "id": "q08",
+    "type": "negative",
+    "query": "iOS game developers using Unreal Engine",
+    "expected": [],
+    "note": "Distractor. r008 does mobile games but in Unity, not Unreal. No correct answer — a good system should return low-confidence results, not a false positive."
+  },
+  {
+    "id": "q09",
+    "type": "exact-domain",
+    "query": "application security / AppSec engineers",
+    "expected": ["r015"],
+    "note": "Security domain. Only one match."
+  },
+  {
+    "id": "q10",
+    "type": "seniority",
+    "query": "junior front-end developers early in their career",
+    "expected": ["r011"],
+    "note": "r004 is a front-end engineer but senior (6y); r011 is the junior (1y). Tests seniority signal, not just 'front-end'."
+  }
+]
