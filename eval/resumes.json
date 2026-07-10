@@ -1,0 +1,415 @@
+[
+  {
+    "resumeId": "r001",
+    "parsedData": {
+      "fullName": "Marko Ilic",
+      "email": "marko.ilic@example.com",
+      "phone": "+1-555-0101",
+      "location": "Berlin, Germany",
+      "summary": "Senior backend engineer specializing in event-driven services on AWS with TypeScript and Node.js.",
+      "totalYearsExperience": 8,
+      "skills": ["TypeScript", "Node.js", "AWS Lambda", "Amazon SQS", "DynamoDB", "Amazon S3", "PostgreSQL", "REST APIs", "Zod"],
+      "languages": ["English", "German"],
+      "experience": [
+        {
+          "company": "Paystream",
+          "role": "Senior Backend Engineer",
+          "startDate": "2020-03",
+          "endDate": null,
+          "current": true,
+          "description": "Designed asynchronous, event-driven payment services on AWS Lambda with SQS queues, dead-letter queues, and DynamoDB as the source of truth. Owned idempotent processing and retry logic."
+        },
+        {
+          "company": "Northwind",
+          "role": "Backend Engineer",
+          "startDate": "2016-06",
+          "endDate": "2020-02",
+          "current": false,
+          "description": "Built Node.js REST APIs backed by PostgreSQL for a logistics platform."
+        }
+      ],
+      "education": [
+        {"institution": "TU Berlin", "degree": "BSc", "field": "Computer Science", "graduationYear": 2016}
+      ],
+      "certifications": ["AWS Certified Developer – Associate"]
+    }
+  },
+  {
+    "resumeId": "r002",
+    "parsedData": {
+      "fullName": "Elena Petrova",
+      "email": "elena.petrova@example.com",
+      "phone": null,
+      "location": "Amsterdam, Netherlands",
+      "summary": "Full-stack developer building React front ends with a TypeScript and Node.js back end.",
+      "totalYearsExperience": 5,
+      "skills": ["React", "TypeScript", "Next.js", "Node.js", "Tailwind CSS", "Amazon S3", "REST APIs"],
+      "languages": ["English", "Russian", "Dutch"],
+      "experience": [
+        {
+          "company": "Bloomly",
+          "role": "Full-Stack Developer",
+          "startDate": "2019-09",
+          "endDate": null,
+          "current": true,
+          "description": "Built customer-facing web apps with React, Next.js and TypeScript, with Node.js APIs and assets served from Amazon S3."
+        }
+      ],
+      "education": [
+        {"institution": "University of Amsterdam", "degree": "BSc", "field": "Software Engineering", "graduationYear": 2019}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r003",
+    "parsedData": {
+      "fullName": "David Chen",
+      "email": "david.chen@example.com",
+      "phone": "+1-555-0103",
+      "location": "Toronto, Canada",
+      "summary": "Cloud full-stack engineer building event-driven applications on Microsoft Azure with a React front end.",
+      "totalYearsExperience": 7,
+      "skills": ["Azure Functions", "Azure Service Bus", "Cosmos DB", "Bicep", "React", "TypeScript", "C#", ".NET"],
+      "languages": ["English", "Mandarin"],
+      "experience": [
+        {
+          "company": "Contoso Health",
+          "role": "Cloud Full-Stack Engineer",
+          "startDate": "2019-01",
+          "endDate": null,
+          "current": true,
+          "description": "Built event-driven microservices on Azure Functions triggered by Azure Service Bus queues, persisting to Cosmos DB. Provisioned all infrastructure as code with Bicep. Delivered the React and TypeScript front end that consumed these services."
+        }
+      ],
+      "education": [
+        {"institution": "University of Waterloo", "degree": "BASc", "field": "Computer Engineering", "graduationYear": 2018}
+      ],
+      "certifications": ["Microsoft Certified: Azure Developer Associate"]
+    }
+  },
+  {
+    "resumeId": "r004",
+    "parsedData": {
+      "fullName": "Sofia Marino",
+      "email": "sofia.marino@example.com",
+      "phone": null,
+      "location": "Milan, Italy",
+      "summary": "Front-end engineer focused on accessible, component-driven React interfaces.",
+      "totalYearsExperience": 6,
+      "skills": ["React", "TypeScript", "Redux", "CSS", "Tailwind CSS", "Storybook", "Accessibility (WCAG)"],
+      "languages": ["English", "Italian"],
+      "experience": [
+        {
+          "company": "Vetrina",
+          "role": "Front-End Engineer",
+          "startDate": "2018-04",
+          "endDate": null,
+          "current": true,
+          "description": "Led the component library for an e-commerce storefront using React, TypeScript and Redux with a strong focus on accessibility and design systems."
+        }
+      ],
+      "education": [
+        {"institution": "Politecnico di Milano", "degree": "BSc", "field": "Computer Science", "graduationYear": 2017}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r005",
+    "parsedData": {
+      "fullName": "Priya Nair",
+      "email": "priya.nair@example.com",
+      "phone": "+1-555-0105",
+      "location": "Bangalore, India",
+      "summary": "Data engineer building batch and streaming pipelines on GCP.",
+      "totalYearsExperience": 6,
+      "skills": ["Python", "Apache Airflow", "Apache Spark", "dbt", "BigQuery", "Google Cloud Platform", "SQL"],
+      "languages": ["English", "Hindi"],
+      "experience": [
+        {
+          "company": "DataForge",
+          "role": "Data Engineer",
+          "startDate": "2018-07",
+          "endDate": null,
+          "current": true,
+          "description": "Built ELT pipelines with Airflow, Spark and dbt landing into BigQuery on Google Cloud Platform for analytics teams."
+        }
+      ],
+      "education": [
+        {"institution": "IIT Madras", "degree": "BTech", "field": "Information Technology", "graduationYear": 2018}
+      ],
+      "certifications": ["Google Professional Data Engineer"]
+    }
+  },
+  {
+    "resumeId": "r006",
+    "parsedData": {
+      "fullName": "Tom Becker",
+      "email": "tom.becker@example.com",
+      "phone": null,
+      "location": "Austin, USA",
+      "summary": "DevOps / SRE automating cloud infrastructure and Kubernetes platforms.",
+      "totalYearsExperience": 9,
+      "skills": ["Kubernetes", "Terraform", "AWS", "Go", "Docker", "Prometheus", "Grafana", "CI/CD"],
+      "languages": ["English"],
+      "experience": [
+        {
+          "company": "Skyline Cloud",
+          "role": "Site Reliability Engineer",
+          "startDate": "2017-02",
+          "endDate": null,
+          "current": true,
+          "description": "Ran multi-cluster Kubernetes on AWS, defined all infrastructure as code with Terraform, and wrote Go tooling and Prometheus-based observability for platform teams."
+        }
+      ],
+      "education": [
+        {"institution": "University of Texas at Austin", "degree": "BSc", "field": "Computer Science", "graduationYear": 2015}
+      ],
+      "certifications": ["Certified Kubernetes Administrator (CKA)"]
+    }
+  },
+  {
+    "resumeId": "r007",
+    "parsedData": {
+      "fullName": "Aisha Rahman",
+      "email": "aisha.rahman@example.com",
+      "phone": "+1-555-0107",
+      "location": "London, UK",
+      "summary": "Senior full-stack engineer shipping React front ends over event-driven AWS back ends.",
+      "totalYearsExperience": 8,
+      "skills": ["React", "TypeScript", "Node.js", "AWS Lambda", "Amazon EventBridge", "Amazon SQS", "DynamoDB"],
+      "languages": ["English", "Arabic"],
+      "experience": [
+        {
+          "company": "Loop Retail",
+          "role": "Senior Full-Stack Engineer",
+          "startDate": "2018-11",
+          "endDate": null,
+          "current": true,
+          "description": "Built a React and TypeScript storefront on top of an event-driven AWS back end using Lambda, EventBridge and SQS, with DynamoDB for persistence."
+        }
+      ],
+      "education": [
+        {"institution": "Imperial College London", "degree": "MEng", "field": "Computing", "graduationYear": 2016}
+      ],
+      "certifications": ["AWS Certified Solutions Architect – Associate"]
+    }
+  },
+  {
+    "resumeId": "r008",
+    "parsedData": {
+      "fullName": "Luka Novak",
+      "email": "luka.novak@example.com",
+      "phone": null,
+      "location": "Ljubljana, Slovenia",
+      "summary": "Mobile game developer building cross-platform titles in Unity.",
+      "totalYearsExperience": 5,
+      "skills": ["Unity", "C#", "Android", "iOS", "Game Design", "Shader Graph"],
+      "languages": ["English", "Slovenian"],
+      "experience": [
+        {
+          "company": "Pixel Peak Games",
+          "role": "Mobile Game Developer",
+          "startDate": "2019-05",
+          "endDate": null,
+          "current": true,
+          "description": "Shipped several free-to-play mobile games in Unity and C# for Android and iOS, owning gameplay systems and performance tuning."
+        }
+      ],
+      "education": [
+        {"institution": "University of Ljubljana", "degree": "BSc", "field": "Computer Science", "graduationYear": 2018}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r009",
+    "parsedData": {
+      "fullName": "Nadia Haddad",
+      "email": "nadia.haddad@example.com",
+      "phone": "+1-555-0109",
+      "location": "Montreal, Canada",
+      "summary": "Machine learning engineer working on LLM applications and retrieval-augmented generation.",
+      "totalYearsExperience": 6,
+      "skills": ["Python", "PyTorch", "LLMs", "Retrieval-Augmented Generation", "pgvector", "Vector Databases", "Embeddings", "FastAPI"],
+      "languages": ["English", "French"],
+      "experience": [
+        {
+          "company": "Cortex AI",
+          "role": "Machine Learning Engineer",
+          "startDate": "2019-08",
+          "endDate": null,
+          "current": true,
+          "description": "Built RAG systems over vector databases (pgvector, FAISS), tuned embedding models, and served inference with FastAPI."
+        }
+      ],
+      "education": [
+        {"institution": "McGill University", "degree": "MSc", "field": "Machine Learning", "graduationYear": 2019}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r010",
+    "parsedData": {
+      "fullName": "Kenji Watanabe",
+      "email": "kenji.watanabe@example.com",
+      "phone": null,
+      "location": "Tokyo, Japan",
+      "summary": "Java backend engineer building high-throughput services with Spring Boot and Kafka.",
+      "totalYearsExperience": 10,
+      "skills": ["Java", "Spring Boot", "Apache Kafka", "PostgreSQL", "AWS", "Microservices", "gRPC"],
+      "languages": ["English", "Japanese"],
+      "experience": [
+        {
+          "company": "Meridian Bank",
+          "role": "Staff Backend Engineer",
+          "startDate": "2015-04",
+          "endDate": null,
+          "current": true,
+          "description": "Built event-driven microservices in Java and Spring Boot communicating over Apache Kafka, backed by PostgreSQL and deployed on AWS."
+        }
+      ],
+      "education": [
+        {"institution": "University of Tokyo", "degree": "BEng", "field": "Information Science", "graduationYear": 2013}
+      ],
+      "certifications": ["Oracle Certified Professional, Java SE"]
+    }
+  },
+  {
+    "resumeId": "r011",
+    "parsedData": {
+      "fullName": "Chloe Dubois",
+      "email": "chloe.dubois@example.com",
+      "phone": null,
+      "location": "Lyon, France",
+      "summary": "Junior front-end developer early in her career, building React interfaces and learning TypeScript.",
+      "totalYearsExperience": 1,
+      "skills": ["React", "JavaScript", "HTML", "CSS", "Git"],
+      "languages": ["English", "French"],
+      "experience": [
+        {
+          "company": "Studio Mint",
+          "role": "Junior Front-End Developer",
+          "startDate": "2023-09",
+          "endDate": null,
+          "current": true,
+          "description": "First developer role building React components in JavaScript and gradually adopting TypeScript on a small marketing-site team."
+        }
+      ],
+      "education": [
+        {"institution": "Université de Lyon", "degree": "BSc", "field": "Computer Science", "graduationYear": 2023}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r012",
+    "parsedData": {
+      "fullName": "Sven Larsson",
+      "email": "sven.larsson@example.com",
+      "phone": "+1-555-0112",
+      "location": "Stockholm, Sweden",
+      "summary": "Staff software engineer designing large-scale distributed systems across AWS and Azure.",
+      "totalYearsExperience": 13,
+      "skills": ["Distributed Systems", "TypeScript", "Go", "AWS", "Azure", "RabbitMQ", "Event-Driven Architecture", "System Design"],
+      "languages": ["English", "Swedish"],
+      "experience": [
+        {
+          "company": "Helios Platform",
+          "role": "Staff Software Engineer",
+          "startDate": "2016-01",
+          "endDate": null,
+          "current": true,
+          "description": "Technical lead for distributed systems spanning AWS and Azure, designing event-driven architectures over RabbitMQ and owning system-design reviews across teams."
+        }
+      ],
+      "education": [
+        {"institution": "KTH Royal Institute of Technology", "degree": "MSc", "field": "Distributed Systems", "graduationYear": 2011}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r013",
+    "parsedData": {
+      "fullName": "Grace O'Brien",
+      "email": "grace.obrien@example.com",
+      "phone": null,
+      "location": "Dublin, Ireland",
+      "summary": "QA automation engineer building end-to-end test suites in TypeScript.",
+      "totalYearsExperience": 5,
+      "skills": ["TypeScript", "Playwright", "Cypress", "Selenium", "Jest", "CI/CD", "Test Automation"],
+      "languages": ["English"],
+      "experience": [
+        {
+          "company": "Quaylytics",
+          "role": "QA Automation Engineer",
+          "startDate": "2019-06",
+          "endDate": null,
+          "current": true,
+          "description": "Owned end-to-end and integration test automation in TypeScript with Playwright and Cypress, wired into CI/CD pipelines."
+        }
+      ],
+      "education": [
+        {"institution": "Trinity College Dublin", "degree": "BSc", "field": "Computer Science", "graduationYear": 2018}
+      ],
+      "certifications": ["ISTQB Certified Tester"]
+    }
+  },
+  {
+    "resumeId": "r014",
+    "parsedData": {
+      "fullName": "Mateo Alvarez",
+      "email": "mateo.alvarez@example.com",
+      "phone": null,
+      "location": "Barcelona, Spain",
+      "summary": "Product designer focused on UX research and design systems.",
+      "totalYearsExperience": 7,
+      "skills": ["Figma", "UX Research", "Design Systems", "Prototyping", "User Testing", "Accessibility"],
+      "languages": ["English", "Spanish", "Catalan"],
+      "experience": [
+        {
+          "company": "Craft & Co",
+          "role": "Senior Product Designer",
+          "startDate": "2017-03",
+          "endDate": null,
+          "current": true,
+          "description": "Led UX research and maintained the design system in Figma for a B2B SaaS product, partnering closely with engineering."
+        }
+      ],
+      "education": [
+        {"institution": "ELISAVA Barcelona", "degree": "BA", "field": "Interaction Design", "graduationYear": 2015}
+      ],
+      "certifications": []
+    }
+  },
+  {
+    "resumeId": "r015",
+    "parsedData": {
+      "fullName": "Omar Farouk",
+      "email": "omar.farouk@example.com",
+      "phone": "+1-555-0115",
+      "location": "Dubai, UAE",
+      "summary": "Security engineer focused on application security and cloud security on AWS.",
+      "totalYearsExperience": 8,
+      "skills": ["Application Security", "AppSec", "Python", "AWS", "IAM", "Threat Modeling", "SAST", "DAST", "OWASP"],
+      "languages": ["English", "Arabic"],
+      "experience": [
+        {
+          "company": "SentinelWorks",
+          "role": "Application Security Engineer",
+          "startDate": "2018-01",
+          "endDate": null,
+          "current": true,
+          "description": "Ran the AppSec program: threat modeling, SAST/DAST integration in CI, and hardening AWS IAM and cloud security posture. Wrote Python security tooling."
+        }
+      ],
+      "education": [
+        {"institution": "American University of Sharjah", "degree": "BSc", "field": "Computer Engineering", "graduationYear": 2015}
+      ],
+      "certifications": ["OSCP", "AWS Certified Security – Specialty"]
+    }
+  }
+]

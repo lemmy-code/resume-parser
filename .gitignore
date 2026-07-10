@@ -5,3 +5,6 @@ samconfig.toml
 .env
 frontend/node_modules/
 frontend/dist/
+dist-test/
+.DS_Store
+.playwright-mcp/
