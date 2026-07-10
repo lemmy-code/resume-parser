@@ -30,6 +30,9 @@ before(async () => {
   if (!RUN) return;
   corpus = JSON.parse(readFileSync(join(process.cwd(), 'eval', 'resumes.json'), 'utf8'));
   store = storeFromEnv();
+  // Clean this corpus first so a re-run (or another integration file) never
+  // leaves stale/duplicate chunks that would skew ordering assertions.
+  for (const { resumeId } of corpus) await store.deleteByResume(resumeId);
   for (const { resumeId, parsedData } of corpus) {
     await embedResume(resumeId, parsedData, { embedder, store, asOf: ASOF });
   }

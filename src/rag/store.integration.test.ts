@@ -27,10 +27,13 @@ let corpus: Fixture[] = [];
 let store: PgChunkStore;
 const embedder = new FakeEmbedder();
 
-before(() => {
+before(async () => {
   if (!RUN) return;
   corpus = JSON.parse(readFileSync(join(process.cwd(), 'eval', 'resumes.json'), 'utf8'));
   store = storeFromEnv();
+  // Start from a clean slate for this corpus so the idempotency assertions hold
+  // regardless of what other integration files seeded into the shared database.
+  for (const { resumeId } of corpus) await store.deleteByResume(resumeId);
 });
 
 after(async () => {
